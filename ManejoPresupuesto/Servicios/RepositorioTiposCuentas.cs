@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using ManejoPresupuesto.Models;
 using Microsoft.Data.SqlClient;
-using System.ComponentModel;
-using System.Formats.Asn1;
 
 namespace ManejoPresupuesto.Servicios
 {
@@ -30,8 +28,11 @@ namespace ManejoPresupuesto.Servicios
             using var connection = new SqlConnection(connectionString);
             var id = await connection.QuerySingleAsync<int>
                 ("TiposCuentasInsertar",
-                new {id_usuarios = tipoCuenta.id_usuarios,
-                Nombre = tipoCuenta.Nombre},
+                new
+                {
+                    id_usuarios = tipoCuenta.id_usuarios,
+                    Nombre = tipoCuenta.Nombre
+                },
                 commandType: System.Data.CommandType.StoredProcedure);
 
             tipoCuenta.id_tiposCuen = id;
@@ -85,7 +86,7 @@ namespace ManejoPresupuesto.Servicios
         {
             using var connection = new SqlConnection(connectionString);
             await connection.ExecuteAsync(@"DELETE TiposCuentas
-            WHERE id_tiposCuen = @id_tiposCuen", new {id_tiposCuen});
+            WHERE id_tiposCuen = @id_tiposCuen", new { id_tiposCuen });
 
         }
 
@@ -94,7 +95,7 @@ namespace ManejoPresupuesto.Servicios
         {
             var query = "UPDATE TiposCuentas set Orden = @Orden where id_tiposCuen = @id_tiposCuen;";
             using var connection = new SqlConnection(connectionString);
-            await connection.ExecuteAsync(query,tipoCuentas);
+            await connection.ExecuteAsync(query, tipoCuentas);
         }
     }
 }

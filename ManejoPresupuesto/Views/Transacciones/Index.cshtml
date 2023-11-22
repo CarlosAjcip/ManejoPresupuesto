@@ -1,0 +1,17 @@
+﻿@model ReporteTransaccionesDetalladas
+
+
+@{
+    ViewData["Title"] = "Reporte Diario";
+}
+
+
+<h1>Transacciones</h1>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Crear Nuevo</a>
+
+<partial name="_ReporteTransaccionesDetalladas" model="Model"></partial>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

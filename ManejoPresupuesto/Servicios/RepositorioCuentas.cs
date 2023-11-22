@@ -9,6 +9,7 @@ namespace ManejoPresupuesto.Servicios
         Task Actualizar(CuentasCreacionViewModel cuentas);
         Task<IEnumerable<Cuentas>> Buscar(int usuarioId);
         Task Crear(Cuentas cuentas);
+        Task Elminar(int id_cuenta);
         Task<Cuentas> ObtenerPorId(int id, int usuarioId);
     }
     public class RepositorioCuentas : IRepositorioCuentas
@@ -49,7 +50,7 @@ namespace ManejoPresupuesto.Servicios
             from Cuentas c
             inner join TiposCuentas tc
             on tc.id_tiposCuen = c.id_TiposCuen
-            where tc.id_usuarios = @id_usuarios AND c.id_cuenta = @id_cuenta", new { id_usuarios, id_cuenta});
+            where tc.id_usuarios = @id_usuarios AND c.id_cuenta = @id_cuenta", new { id_usuarios, id_cuenta });
         }
 
         public async Task Actualizar(CuentasCreacionViewModel cuentas)
@@ -59,6 +60,13 @@ namespace ManejoPresupuesto.Servicios
             set Nombre = @Nombre,Balance = @Balance, Descripcion = @Descripcion,
             id_TiposCuen = @id_TiposCuen
             where id_cuenta = @id_cuenta;", cuentas);
+        }
+
+        //Elminar La Cuneta
+        public async Task Elminar(int id_cuenta)
+        {
+            using var connection = new SqlConnection(connectionString);
+            await connection.ExecuteAsync("DELETE FROM Cuentas where id_cuenta = @id_cuenta", new { id_cuenta });
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using Dapper;
-using ManejoPresupuesto.Models;
+﻿using ManejoPresupuesto.Models;
 using ManejoPresupuesto.Servicios;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 
 namespace ManejoPresupuesto.Controllers
 {
@@ -103,10 +100,10 @@ namespace ManejoPresupuesto.Controllers
             return View(tipoCuenta);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async  Task<IActionResult> Editar(TipoCuenta tipoCuenta)
+        public async Task<IActionResult> Editar(TipoCuenta tipoCuenta)
         {
             var usuarioId = servicioUsuarios.ObtenerUsuarioId();
             var tipoCuentaExiste = await repositorioTiposCuentas.ObtenerPorId(tipoCuenta.id_tiposCuen,
@@ -126,7 +123,7 @@ namespace ManejoPresupuesto.Controllers
         {
             var usuarioId = servicioUsuarios.ObtenerUsuarioId();
             var tipoCuenta = await repositorioTiposCuentas.ObtenerPorId(id, usuarioId);
-            
+
             if (tipoCuenta is null)
             {
                 return RedirectToAction("NoEncontrado", "Home");
